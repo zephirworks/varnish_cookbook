@@ -1,0 +1,13 @@
+# Configuration file for varnish
+#
+# /etc/init.d/varnish expects the variable $DAEMON_OPTS to be set from this
+# shell script fragment.
+#
+
+varnishd_enable=true
+varnishd_listen=<%= @address %>:<%= @port %>
+varnishd_admin=<%= @admin_address %>:<%= @admin_port %>
+varnishd_storage="<%= @storage %>"
+<% if @vcl %>
+varnishd_config="<%= @vcl %>"
+<% end %>

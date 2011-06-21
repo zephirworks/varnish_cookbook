@@ -19,6 +19,11 @@
 # limitations under the License.
 #
 
+root_group = value_for_platform(
+  ["openbsd", "freebsd", "mac_os_x"] => { "default" => "wheel" },
+  "default" => "root"
+)
+
 if ["centos"].include?(node[:platform])
   s = "http://repo.varnish-cache.org/redhat" + 
     case node[:varnish][:version]
@@ -75,7 +80,7 @@ end
 
 file "/etc/varnish/secret" do
   owner "root"
-  group "root"
+  root_group
   mode "0600"
   content node[:varnish][:secret]
 end
@@ -83,7 +88,7 @@ end
 template "#{node[:varnish][:default]}" do
   source "varnish-sysconfig.erb"
   owner "root"
-  group "root"
+  root_group
   mode 0644
   variables({
               :vcl => "#{node[:varnish][:dir]}/default.vcl",
@@ -104,7 +109,7 @@ if not node[:varnish][:remote_vcl].empty?
   remote_file "#{node[:varnish][:dir]}/default.vcl" do
     source node[:varnish][:remote_vcl]
     owner "root"
-    group "root"
+    root_group
     mode 0644
     notifies :restart, resources(:service => "varnish")
   end

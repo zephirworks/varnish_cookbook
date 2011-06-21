@@ -5,6 +5,9 @@ when "debian","ubuntu"
 when "centos"
   set[:varnish][:dir]     = "/etc/varnish"
   set[:varnish][:default] = "/etc/sysconfig/varnish"
+when "freebsd"
+  set[:varnish][:dir]     = "/usr/local/etc/varnish"
+  set[:varnish][:default] = "/etc/rc.conf.d/varnishd"
 end
 
 default[:varnish][:version] = "2.1"

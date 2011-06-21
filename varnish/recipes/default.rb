@@ -78,7 +78,7 @@ service "varnish" do
   action [ :enable  ]
 end
 
-file "/etc/varnish/secret" do
+file "#{node[:varnish][:dir]}/secret" do
   owner "root"
   root_group
   mode "0600"

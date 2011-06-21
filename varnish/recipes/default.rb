@@ -74,6 +74,7 @@ elsif ["debian", "ubuntu"].include?(node[:platform])
 end
 
 service "varnish" do
+  service_name "varnishd" if platform?("freebsd")
   supports :restart => true, :reload => true
   action [ :enable  ]
 end
